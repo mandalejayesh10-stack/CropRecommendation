@@ -56,3 +56,12 @@ The Flask server was successfully started and validated:
   ```bash
   python app.py
   ```
+
+---
+
+## 4. GitHub Repository & Deployment
+- **GitHub URL**: **[https://github.com/mandalejayesh10-stack/CropRecommendation](https://github.com/mandalejayesh10-stack/CropRecommendation)**
+- The repository has been created and the initial commit pushed.
+- A `.gitignore` has been configured to exclude build junk while keeping the necessary model pickles (`model.pkl`, `scaler.pkl`, `label_encoder.pkl`) and data CSVs, enabling zero-configuration deployment.
+- `requirements.txt` includes `gunicorn` as the web gateway for cloud deployment (e.g. Render, Railway).
+- `app.py` has been updated to dynamically bind to the environment port (`PORT`) for seamless cloud hosting.
