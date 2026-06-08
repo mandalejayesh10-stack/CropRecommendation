@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prediction Result - Crop Recommendation System</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/稳定/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fa-solid fa-leaf me-2 text-warning"></i>CropRecommend ML</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <!-- Result Display Card -->
+                <div class="result-card">
+                    <div class="result-icon">
+                        <i class="fa-solid fa-seedling"></i>
+                    </div>
+                    <h5 class="text-uppercase text-muted tracking-wider mt-3">Machine Learning Recommendation</h5>
+                    <h3 class="mt-2 text-secondary">The Best Crop to Cultivate is:</h3>
+                    <div class="result-crop-name">
+                        <span class="badge bg-success p-3 px-5 rounded-pill">{{ crop }}</span>
+                    </div>
+                    <p class="text-muted mb-4">
+                        Based on the Random Forest Classifier trained on regional soil and climatic factors, this crop yields the highest predicted success rate.
+                    </p>
+                </div>
+
+                <!-- Input Details Summary -->
+                <div class="card shadow-sm border-0 rounded-4 overflow-hidden mb-5">
+                    <div class="card-header bg-light border-bottom p-3">
+                        <h5 class="mb-0 text-success"><i class="fa-solid fa-clipboard-list me-2"></i>Analysis Input Summary</h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <table class="table table-hover table-striped mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Parameter</th>
+                                    <th class="text-end">Provided Value</th>
+                                    <th>Unit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><i class="fa-solid fa-circle-nodes me-2 text-danger"></i>Nitrogen (N)</td>
+                                    <td class="text-end font-monospace">{{ inputs.N }}</td>
+                                    <td>mg/kg</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa-solid fa-circle-nodes me-2 text-primary"></i>Phosphorus (P)</td>
+                                    <td class="text-end font-monospace">{{ inputs.P }}</td>
+                                    <td>mg/kg</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa-solid fa-circle-nodes me-2 text-warning"></i>Potassium (K)</td>
+                                    <td class="text-end font-monospace">{{ inputs.K }}</td>
+                                    <td>mg/kg</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa-solid fa-thermometer me-2 text-danger"></i>Temperature</td>
+                                    <td class="text-end font-monospace">{{ inputs.temperature }}</td>
+                                    <td>°C</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa-solid fa-droplet me-2 text-info"></i>Relative Humidity</td>
+                                    <td class="text-end font-monospace">{{ inputs.humidity }}</td>
+                                    <td>%</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa-solid fa-gauge-simple-high me-2 text-secondary"></i>Soil pH</td>
+                                    <td class="text-end font-monospace">{{ inputs.ph }}</td>
+                                    <td>pH</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fa-solid fa-cloud-rain me-2 text-primary"></i>Annual Rainfall</td>
+                                    <td class="text-end font-monospace">{{ inputs.rainfall }}</td>
+                                    <td>mm</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Back button -->
+                <div class="text-center mb-5">
+                    <a href="/" class="btn btn-secondary-custom btn-lg"><i class="fa-solid fa-arrow-left me-2"></i>Analyze Another Field</a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-1">&copy; 2026 Crop Recommendation System. All Rights Reserved.</p>
+            <p class="mb-0 small">Final Year College Mini Project | Developed using Python, Flask & Random Forest Classifier</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/稳定/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+</body>
+</html>

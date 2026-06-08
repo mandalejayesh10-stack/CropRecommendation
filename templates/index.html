@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation System using Machine Learning</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/稳定/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/"><i class="fa-solid fa-leaf me-2 text-warning"></i>CropRecommend ML</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/"><i class="fa-solid fa-house me-1"></i> Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Header -->
+    <header class="hero-section">
+        <div class="container">
+            <h1>Crop Recommendation System</h1>
+            <p>Empowering precision agriculture through state-of-the-art Random Forest machine learning. Fill in the soil chemical values and climate parameters to receive crop recommendation.</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card main-card">
+                    <div class="card-header-custom">
+                        <h3><i class="fa-solid fa-square-poll-vertical me-2"></i>Soil & Environmental Parameters</h3>
+                        <p class="text-muted mb-0">Please enter values corresponding to the current state of your farmland.</p>
+                    </div>
+                    <div class="card-body p-4 p-md-5">
+                        <form action="/predict" method="POST" class="needs-validation" novalidate>
+                            <h5 class="mb-4 text-success pb-2 border-bottom"><i class="fa-solid fa-flask me-2"></i>Soil Nutrients</h5>
+                            <div class="row mb-4">
+                                <!-- Nitrogen -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="N" class="form-label">Nitrogen (N)</label>
+                                    <div class="input-group">
+                                        <input type="number" step="any" class="form-control" id="N" name="N" placeholder="e.g. 50" required min="0" max="200">
+                                        <span class="input-group-text input-group-text-custom">mg/kg</span>
+                                    </div>
+                                    <div class="feature-info">Ratio of Nitrogen content in soil (0 - 200)</div>
+                                </div>
+                                <!-- Phosphorus -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="P" class="form-label">Phosphorus (P)</label>
+                                    <div class="input-group">
+                                        <input type="number" step="any" class="form-control" id="P" name="P" placeholder="e.g. 40" required min="0" max="200">
+                                        <span class="input-group-text input-group-text-custom">mg/kg</span>
+                                    </div>
+                                    <div class="feature-info">Ratio of Phosphorous content in soil (0 - 200)</div>
+                                </div>
+                                <!-- Potassium -->
+                                <div class="col-md-4 mb-3">
+                                    <label for="K" class="form-label">Potassium (K)</label>
+                                    <div class="input-group">
+                                        <input type="number" step="any" class="form-control" id="K" name="K" placeholder="e.g. 35" required min="0" max="300">
+                                        <span class="input-group-text input-group-text-custom">mg/kg</span>
+                                    </div>
+                                    <div class="feature-info">Ratio of Potassium content in soil (0 - 300)</div>
+                                </div>
+                            </div>
+
+                            <h5 class="mb-4 text-success pb-2 border-bottom"><i class="fa-solid fa-cloud-sun-rain me-2"></i>Climatic Parameters & Soil pH</h5>
+                            <div class="row mb-4">
+                                <!-- Temperature -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="temperature" class="form-label">Temperature</label>
+                                    <div class="input-group">
+                                        <input type="number" step="any" class="form-control" id="temperature" name="temperature" placeholder="e.g. 24.5" required min="0" max="60">
+                                        <span class="input-group-text input-group-text-custom">°C</span>
+                                    </div>
+                                    <div class="feature-info">Ambient temperature in Celsius (0 - 60)</div>
+                                </div>
+                                <!-- Humidity -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="humidity" class="form-label">Relative Humidity</label>
+                                    <div class="input-group">
+                                        <input type="number" step="any" class="form-control" id="humidity" name="humidity" placeholder="e.g. 80.2" required min="0" max="100">
+                                        <span class="input-group-text input-group-text-custom">%</span>
+                                    </div>
+                                    <div class="feature-info">Relative humidity percentage (0 - 100)</div>
+                                </div>
+                            </div>
+
+                            <div class="row mb-5">
+                                <!-- pH -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="ph" class="form-label">Soil pH Level</label>
+                                    <div class="input-group">
+                                        <input type="number" step="any" class="form-control" id="ph" name="ph" placeholder="e.g. 6.5" required min="0" max="14">
+                                        <span class="input-group-text input-group-text-custom">pH</span>
+                                    </div>
+                                    <div class="feature-info">Acidity/alkalinity of the soil (0.0 - 14.0)</div>
+                                </div>
+                                <!-- Rainfall -->
+                                <div class="col-md-6 mb-3">
+                                    <label for="rainfall" class="form-label">Average Annual Rainfall</label>
+                                    <div class="input-group">
+                                        <input type="number" step="any" class="form-control" id="rainfall" name="rainfall" placeholder="e.g. 150.8" required min="0" max="500">
+                                        <span class="input-group-text input-group-text-custom">mm</span>
+                                    </div>
+                                    <div class="feature-info">Expected annual rainfall (0 - 500)</div>
+                                </div>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <div class="text-center d-grid">
+                                <button type="submit" class="btn btn-primary-custom btn-lg"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Recommend Crop</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <p class="mb-1">&copy; 2026 Crop Recommendation System. All Rights Reserved.</p>
+            <p class="mb-0 small">Final Year College Mini Project | Developed using Python, Flask & Random Forest Classifier</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/稳定/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+    <script>
+        // Form validations
+        (function () {
+            'use strict'
+            var forms = document.querySelectorAll('.needs-validation')
+            Array.prototype.slice.call(forms)
+                .forEach(function (form) {
+                    form.addEventListener('submit', function (event) {
+                        if (!form.checkValidity()) {
+                            event.preventDefault()
+                            event.stopPropagation()
+                        }
+                        form.classList.add('was-validated')
+                    }, false)
+                })
+        })()
+    </script>
+</body>
+</html>
