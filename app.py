@@ -1,6 +1,7 @@
 import os
 import pickle
 import numpy as np
+import pandas as pd
 from flask import Flask, request, render_template
 
 # Initialize Flask app
@@ -80,8 +81,9 @@ def predict():
             "rainfall": rainfall
         }
 
-        # 2. Reshape features into 2D array: (1, 7)
-        features = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
+        # 2. Reshape features into a Pandas DataFrame with column names (suppresses scikit-learn feature name UserWarning)
+        feature_names = ["N", "P", "K", "temperature", "humidity", "ph", "rainfall"]
+        features = pd.DataFrame([[N, P, K, temperature, humidity, ph, rainfall]], columns=feature_names)
 
         # 3. Apply standard scaling using the loaded scaler
         features_scaled = scaler.transform(features)
